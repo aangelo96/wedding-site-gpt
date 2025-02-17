@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wedding Website</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Dancing+Script&family=Lora:wght@400;700&display=swap" rel="stylesheet">
     <style>
         html {
@@ -23,7 +24,7 @@
         .font-script { font-family: 'Dancing Script', cursive; }
         .font-body { font-family: 'Lora', serif; }
             
-</style>
+    </style>
     <script>
         window.addEventListener("scroll", function() {
             var navbar = document.getElementById("navbar");
@@ -77,27 +78,80 @@
                 });
             });
         });
+
+        function updateBackgroundPosition() {
+            const viewportWidth = window.innerWidth;
+            let position = -300; 
+            if (viewportWidth < 1900) {
+                position = -250;
+            }
+            if (viewportWidth < 1700) {
+                position = -200;
+            }
+            if (viewportWidth < 1500) {
+                position = -150;
+            }
+            if (viewportWidth < 1300) {
+                position = -100;
+            }
+            if (viewportWidth < 1100) {
+                position = 0;
+            }
+            if (viewportWidth < 768) {
+                position = -100;
+            }
+            if (viewportWidth < 700) {
+                position = 0;
+            }
+            document.querySelector('.dynamic-bg').classList.remove("bg-[center_top_-300px]", "bg-[center_top_-250px]", "bg-[center_top_-200px]", "bg-[center_top_-150px]", "bg-[center_top_-100px]", "bg-[center_top_-0px]");
+            document.querySelector('.dynamic-bg').classList.add(`bg-[center_top_${position}px]`);
+        }
+
+        window.addEventListener("resize", updateBackgroundPosition);
+        window.addEventListener("DOMContentLoaded", updateBackgroundPosition);
+
+        document.addEventListener("DOMContentLoaded", function() {
+          const menuToggle = document.getElementById("menu-toggle");
+          const navMenu = document.getElementById("nav-menu");
+
+          if (menuToggle && navMenu) {
+            menuToggle.addEventListener("click", function() {
+              if (navMenu.classList.contains("hidden")) {
+                navMenu.classList.remove("hidden", "space-x-6");
+                navMenu.classList.add("flex", "flex-col", "items-center", "top-20");
+              } else {
+                navMenu.classList.add("hidden", "space-x-6");
+                navMenu.classList.remove("flex", "flex-col", "items-center", "top-20");
+              }
+            });
+          }
+        });
     </script>
 </head>
 <body class="bg-[#F5EDE1]">
-    <div class="relative h-screen w-full">
+    <div class="relative h-[50vh] md:h-screen w-full">
         <!-- Background Image -->
-        <div class="absolute inset-0 bg-cover bg-[center_top_-300px]" style="background-image: url('pre_wed_1.jpeg');"></div>
+        <div class="absolute inset-0 bg-cover dynamic-bg" style="background-image: url('pre_wed_1.jpeg');"></div>
         
         <!-- Overlay -->
         <div class="absolute inset-0 bg-black bg-opacity-30"></div>
 
         <!-- Header -->
-        <header id="navbar" class="fixed top-0 left-0 w-full flex flex-col justify-center items-center p-6 text-white bg-transparent z-50 transition-all duration-300">
-            <nav class="flex space-x-6 justify-center">
-                <a href="#countdown" class="hover:underline">Remind Me</a>
-                <a href="#our-story" class="hover:underline">Our Story</a>
-                <a href="#rsvp" class="hover:underline">RSVP</a>
-            </nav>
+        <header id="navbar" class="fixed top-0 left-0 w-full p-4 md:p-6 text-white bg-transparent z-50 transition-all duration-300">
+            <div class="flex justify-between items-center w-full max-w-4xl mx-auto">
+                <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+                    ☰
+                </button>
+                <nav id="nav-menu" class="hidden md:flex space-x-6 justify-center w-full md:relative absolute left-0 w-full bg-[#7A3B2E] md:bg-transparent p-4 md:p-0 flex-col md:flex-row items-center shadow-lg md:shadow-none">
+                    <a href="#countdown" class="hover:underline">Remind Me</a>
+                    <a href="#our-story" class="hover:underline">Our Story</a>
+                    <a href="#rsvp" class="hover:underline">RSVP</a>
+                </nav>
+            </div>
         </header>
         
         <!-- Hero Section -->
-        <div class="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4">
+        <div class="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4 md:px-10">
             <p class="text-lg font-body">We're Getting Married!</p>
             <h1 class="text-5xl font-heading font-bold mt-2">Arnold & Jessica</h1>
             <p class="text-lg mt-2 font-body">10 . 14 . 25</p>
@@ -107,9 +161,9 @@
     
     <!-- Countdown Section -->
     <div id="countdown">
-    <div class="flex flex-col justify-center items-center text-center py-20 bg-[#E3D5CA]">
+    <div class="flex flex-col justify-center items-center text-center py-10 md:py-20 bg-[#E3D5CA] px-4 md:px-10">
         <h2 class="text-4xl font-heading font-bold text-gray-800">Counting the Days!</h2>
-        <div class="flex space-x-8 text-6xl font-heading font-bold text-[#7A3B2E] mt-6">
+        <div class="flex flex-wrap justify-center space-x-2 md:space-x-8 text-2xl md:text-6xl font-heading font-bold text-[#7A3B2E] mt-6">
             <div class="flex flex-col items-center"><span id="days">0</span><p class="text-xl text-gray-600 mt-2">Days</p></div>
             <span>:</span>
             <div class="flex flex-col items-center"><span id="hours">0</span><p class="text-xl text-gray-600 mt-2">Hours</p></div>
@@ -122,7 +176,7 @@
     </div>
     <!-- Wedding Schedule Section -->
     <div id="our-story">
-    <div class="flex flex-col justify-center items-center text-center py-20 bg-[#F5EDE1]">
+    <div class="flex flex-col justify-center items-center text-center py-10 md:py-20 bg-[#F5EDE1] px-4 md:px-10">
         <p class="text-lg font-body text-gray-700">Together with joyful hearts and the grace of God, we cordially request the honor of your presence at our wedding celebration:</p>
         <div class="w-1 h-12 bg-gray-400 my-6"></div>
         <p class="text-lg font-body text-gray-700">Date:</p>
@@ -130,9 +184,9 @@
         <div class="w-1 h-12 bg-gray-400 my-6"></div>
         
         <div class="flex flex-col items-center">
-            <img src="wedding_rings.webp" alt="rings" class="w-16 h-16 mb-4 rounded-full">
+            <img src="wedding_rings.webp" alt="rings" class="w-12 h-12 md:w-16 md:h-16 mb-4 rounded-full">
             <p class="text-lg font-body text-gray-700">Holy Matrimony</p>
-            <h3 class="text-2xl font-heading font-bold text-[#7A3B2E]">10:00 AM</h3>
+            <h3 class="text-2xl font-heading font-bold text-[#7A3B2E]">11:00 AM</h3>
             <p class="text-md text-gray-700"><a href="https://maps.app.goo.gl/wpbZf8vzBseAvpmLA?g_st=com.google.maps.preview.copy" target="_blank" class="text-[#A64B43] underline">Our Lady of Mt Carmel Church</a></p>
         </div>
         
@@ -141,7 +195,7 @@
         <div class="flex flex-col items-center">
             <img src="champagne_glasses.webp" alt="champagne glasses" class="w-16 h-16 mb-4 rounded-full">
             <p class="text-lg font-body text-gray-700">Wedding Reception</p>
-            <h3 class="text-2xl font-heading font-bold text-[#7A3B2E]">6:00 PM</h3>
+            <h3 class="text-2xl font-heading font-bold text-[#7A3B2E]">5:00 PM</h3>
             <p class="text-md text-gray-700"><a href="https://maps.app.goo.gl/Ka56SEuNhazU81y66?g_st=com.google.maps.preview.copy" target="_blank" class="text-[#A64B43] underline">Vines of the Yarra Valley</a></p>
         </div>
         
@@ -149,7 +203,7 @@
     </div>
     <!-- RSVP Section -->
     <div id="rsvp">
-    <div class="flex flex-col justify-center items-center text-center py-20 bg-[#E3D5CA]">
+    <div class="flex flex-col justify-center items-center text-center py-20 px-6 md:px-20 bg-[#E3D5CA]">
         <h2 class="text-4xl font-heading font-bold text-gray-800">RSVP</h2>
         <p class="text-lg font-body text-gray-700 mt-4">We can't wait to celebrate with you! Please let us know if you'll be attending.</p>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSfUdSVVqY3Ax_YARe5v7l9QY_EkCHiGPes-olxeTo6wPx4mZQ/viewform" target="_blank" class="mt-6 bg-[#A64B43] hover:bg-[#7A3B2E] transition-all duration-300 text-white px-6 py-3 rounded-md shadow-lg">RSVP Now</a>

@@ -24,6 +24,30 @@
         .font-script { font-family: 'Dancing Script', cursive; }
         .font-body { font-family: 'Lora', serif; }
             
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+        .petal {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-10%) rotateZ(0deg);
+            }
+            100% {
+                transform: translateY(110vh) rotateZ(360deg);
+            }
+        }
     </style>
     <script>
         window.addEventListener("scroll", function() {
@@ -126,10 +150,35 @@
             });
           }
         });
+
+        function createPetal() {
+            const petal = document.createElement("img");
+            petal.classList.add("petal");
+            petal.src = "petal.png"; // Replace with actual SVG file path
+            document.getElementById("sakura-overlay").appendChild(petal);
+            
+            let size = Math.random() * 60;
+            petal.style.width = `${size}px`;
+            petal.style.height = "auto";
+            petal.style.left = `${Math.random() * window.innerWidth}px`;
+            petal.style.animationDuration = `10s`;
+            petal.style.animationDelay = `0s`;
+            
+            setTimeout(() => {
+                petal.remove();
+            }, 8000);
+        }
+        
+        let sakuraInterval = setInterval(createPetal, 150);
+        
+        setTimeout(() => {
+            clearInterval(sakuraInterval);
+        }, 15000);
     </script>
 </head>
 <body class="bg-[#F5EDE1]">
     <div class="relative h-[50vh] md:h-screen w-full">
+        <div class="overlay" id="sakura-overlay"></div>
         <!-- Background Image -->
         <div class="absolute inset-0 bg-cover dynamic-bg" style="background-image: url('pre_wed_1.jpeg');"></div>
         
